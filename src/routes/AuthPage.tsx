@@ -6,7 +6,7 @@ import { Input } from '../components/ui/Input';
 import { useToast } from '../hooks/useToast';
 
 export function AuthPage() {
-  const { user, loading, signInWithEmail, signInWithGoogle } = useAuth();
+  const { user, loading, signInWithEmail } = useAuth();
   const { addToast } = useToast();
   const [email, setEmail] = useState('');
   const [sending, setSending] = useState(false);
@@ -27,13 +27,6 @@ export function AuthPage() {
       addToast('Erreur lors de l\'envoi du lien', 'error');
     } else {
       setSent(true);
-    }
-  };
-
-  const handleGoogle = async () => {
-    const { error } = await signInWithGoogle();
-    if (error) {
-      addToast('Erreur lors de la connexion Google', 'error');
     }
   };
 

@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useRef, useCallback } from 'react';
+import { type ReactNode, useEffect, useRef, useCallback } from 'react';
 import clsx from 'clsx';
 
 interface ModalProps {
