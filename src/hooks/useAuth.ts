@@ -27,9 +27,18 @@ export function useAuth() {
     return () => subscription.unsubscribe();
   }, []);
 
-  const signInWithEmail = useCallback(async (email: string) => {
-    const { error } = await supabase.auth.signInWithOtp({
+  const signInWithEmail = useCallback(async (email: string, password: string) => {
+    const { error } = await supabase.auth.signInWithPassword({
       email,
+      password,
+    });
+    return { error };
+  }, []);
+
+  const signUpWithEmail = useCallback(async (email: string, password: string) => {
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
       options: {
         emailRedirectTo: `${window.location.origin}/dashboard`,
       },
@@ -55,6 +64,7 @@ export function useAuth() {
   return {
     ...state,
     signInWithEmail,
+    signUpWithEmail,
     signInWithGoogle,
     signOut,
   };
