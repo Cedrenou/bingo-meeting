@@ -106,7 +106,7 @@ export function PhotoGallery({ photos, meetingId, themeId, readOnly = false, onP
 
   return (
     <>
-      <div className="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-3">
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-4">
         {!readOnly && <PhotoUploader onUpload={handleUpload} disabled={uploadingCount > 0} />}
 
         {uploadingCount > 0 &&

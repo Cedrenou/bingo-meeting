@@ -59,7 +59,7 @@ export function BingoBoard() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="h-screen overflow-hidden flex flex-col">
       {/* Header */}
       <div className="sticky top-0 z-30 bg-[#0f0a2e]/90 backdrop-blur-md border-b border-white/10 px-4 py-3">
         <div className="max-w-6xl mx-auto space-y-3">
@@ -85,7 +85,7 @@ export function BingoBoard() {
       </div>
 
       {/* Board */}
-      <div className="flex-1 flex items-center justify-center p-4 md:p-8">
+      <div className="flex-1 min-h-0 flex items-center justify-center p-4 md:p-8">
         <BingoGrid
           themes={themes}
           gridCols={meeting.grid_cols}

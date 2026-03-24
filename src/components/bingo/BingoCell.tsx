@@ -13,7 +13,7 @@ export function BingoCell({ theme, onClick, readOnly = false }: BingoCellProps) 
       onClick={onClick}
       disabled={readOnly && !theme.is_done}
       className={clsx(
-        'relative flex flex-col items-center justify-center gap-2 p-4 rounded-2xl border transition-all duration-300 aspect-square overflow-hidden',
+        'relative flex flex-col items-center justify-center gap-2 p-4 rounded-2xl border transition-all duration-300 overflow-hidden aspect-square max-h-full',
         theme.is_done
           ? 'bg-emerald-900/30 border-emerald-500/30 animate-bounce-check'
           : 'border-white/10 hover:border-white/30 hover:-translate-y-1 hover:shadow-xl cursor-pointer',

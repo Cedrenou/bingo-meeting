@@ -31,7 +31,7 @@ export function ThemeModal({ theme, meetingId, isOpen, onClose, onThemeUpdated, 
   if (!theme) return null;
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} className="!max-w-4xl !max-h-[95vh] flex flex-col">
+    <Modal isOpen={isOpen} onClose={onClose} className="!max-w-[95vw] !max-h-[95vh] !w-full flex flex-col">
       {/* Header */}
       <div className="flex items-center justify-between p-5 border-b border-white/10">
         <div className="flex items-center gap-3">
