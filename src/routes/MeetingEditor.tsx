@@ -14,7 +14,6 @@ interface ThemeData {
   title: string;
   emoji: string;
   color: string;
-  timer_duration: number | null;
 }
 
 export function MeetingEditor() {
@@ -51,7 +50,6 @@ export function MeetingEditor() {
           title: t.title,
           emoji: t.emoji,
           color: t.color,
-          timer_duration: t.timer_duration,
         }))
       );
     }
@@ -102,8 +100,7 @@ export function MeetingEditor() {
               emoji: t.emoji,
               color: t.color,
               position: i,
-              timer_duration: t.timer_duration,
-            });
+                });
           } else {
             await createTheme({
               meeting_id: meetingId,
@@ -111,8 +108,7 @@ export function MeetingEditor() {
               emoji: t.emoji,
               color: t.color,
               position: i,
-              timer_duration: t.timer_duration,
-            });
+                });
           }
         }
 
@@ -148,8 +144,7 @@ export function MeetingEditor() {
             emoji: t.emoji,
             color: t.color,
             position: i,
-            timer_duration: t.timer_duration,
-          });
+            });
         }
 
         if (launch) {

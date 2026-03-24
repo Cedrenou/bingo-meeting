@@ -22,8 +22,6 @@ export interface Theme {
   is_done: boolean;
   done_at: string | null;
   notes: string | null;
-  timer_duration: number | null;
-  elapsed_seconds: number;
   created_at: string;
   updated_at: string;
   photos?: Photo[];
@@ -53,7 +51,6 @@ export interface NewTheme {
   emoji: string;
   color: string;
   position: number;
-  timer_duration?: number | null;
 }
 
 export interface NewPhoto {

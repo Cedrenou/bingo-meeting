@@ -2,7 +2,6 @@ import { useCallback } from 'react';
 import { Modal } from '../ui/Modal';
 import { Button } from '../ui/Button';
 import { PhotoGallery } from './PhotoGallery';
-import { ThemeTimer } from './ThemeTimer';
 import { useThemeActions } from '../../hooks/useThemes';
 import type { Theme } from '../../types';
 
@@ -16,7 +15,7 @@ interface ThemeModalProps {
 }
 
 export function ThemeModal({ theme, meetingId, isOpen, onClose, onThemeUpdated, readOnly = false }: ThemeModalProps) {
-  const { toggleThemeDone, updateTheme } = useThemeActions();
+  const { toggleThemeDone } = useThemeActions();
 
   const handleToggleDone = useCallback(async () => {
     if (!theme) return;
@@ -28,13 +27,6 @@ export function ThemeModal({ theme, meetingId, isOpen, onClose, onThemeUpdated, 
       }
     }
   }, [theme, toggleThemeDone, onThemeUpdated, onClose]);
-
-  const handleElapsedChange = useCallback((elapsed: number) => {
-    if (!theme || readOnly) return;
-    if (elapsed > 0 && elapsed % 5 === 0) {
-      updateTheme(theme.id, { elapsed_seconds: elapsed });
-    }
-  }, [theme, readOnly, updateTheme]);
 
   if (!theme) return null;
 
@@ -52,12 +44,6 @@ export function ThemeModal({ theme, meetingId, isOpen, onClose, onThemeUpdated, 
           </div>
         </div>
         <div className="flex items-center gap-3">
-          <ThemeTimer
-            durationSeconds={theme.timer_duration}
-            initialElapsed={theme.elapsed_seconds}
-            autoStart={!readOnly}
-            onElapsedChange={handleElapsedChange}
-          />
           <button
             onClick={onClose}
             className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors"

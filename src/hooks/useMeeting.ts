@@ -169,7 +169,6 @@ export function useMeetingActions() {
         emoji: t.emoji,
         color: t.color,
         position: t.position,
-        timer_duration: t.timer_duration,
       }));
 
       await supabase.from('themes').insert(newThemes);

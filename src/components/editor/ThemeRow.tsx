@@ -9,7 +9,6 @@ interface ThemeRowData {
   title: string;
   emoji: string;
   color: string;
-  timer_duration: number | null;
 }
 
 interface ThemeRowProps {
@@ -67,22 +66,6 @@ export function ThemeRow({ theme, onUpdate, onDelete }: ThemeRowProps) {
       />
 
       <ColorPicker value={theme.color} onChange={(color) => onUpdate({ color })} />
-
-      <div className="flex items-center gap-1.5">
-        <span className="text-white/40 text-xs">⏱</span>
-        <input
-          type="number"
-          value={theme.timer_duration ? theme.timer_duration / 60 : ''}
-          onChange={(e) => {
-            const val = e.target.value;
-            onUpdate({ timer_duration: val ? parseInt(val) * 60 : null });
-          }}
-          placeholder="min"
-          min="1"
-          max="120"
-          className="w-16 px-2 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/30 focus:outline-none focus:ring-1 focus:ring-indigo-500/50 text-sm text-center"
-        />
-      </div>
 
       <Button
         variant="ghost"

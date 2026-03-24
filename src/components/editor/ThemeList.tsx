@@ -22,7 +22,6 @@ interface ThemeData {
   title: string;
   emoji: string;
   color: string;
-  timer_duration: number | null;
 }
 
 interface ThemeListProps {
@@ -52,7 +51,6 @@ export function ThemeList({ themes, onChange }: ThemeListProps) {
       title: '',
       emoji: EMOJIS[Math.floor(Math.random() * EMOJIS.length)],
       color: THEME_COLORS[themes.length % THEME_COLORS.length],
-      timer_duration: null,
     };
     onChange([...themes, newTheme]);
   };
