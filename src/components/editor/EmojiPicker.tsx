@@ -1,4 +1,5 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 import { EMOJIS } from '../../lib/constants';
 
 interface EmojiPickerProps {
@@ -8,11 +9,23 @@ interface EmojiPickerProps {
 
 export function EmojiPicker({ value, onChange }: EmojiPickerProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const [position, setPosition] = useState({ top: 0, left: 0 });
+
+  const updatePosition = useCallback(() => {
+    if (buttonRef.current) {
+      const rect = buttonRef.current.getBoundingClientRect();
+      setPosition({ top: rect.bottom + 4, left: rect.left });
+    }
+  }, []);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) {
+      if (
+        buttonRef.current && !buttonRef.current.contains(e.target as Node) &&
+        dropdownRef.current && !dropdownRef.current.contains(e.target as Node)
+      ) {
         setIsOpen(false);
       }
     };
@@ -20,9 +33,22 @@ export function EmojiPicker({ value, onChange }: EmojiPickerProps) {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  useEffect(() => {
+    if (isOpen) {
+      updatePosition();
+      window.addEventListener('scroll', updatePosition, true);
+      window.addEventListener('resize', updatePosition);
+      return () => {
+        window.removeEventListener('scroll', updatePosition, true);
+        window.removeEventListener('resize', updatePosition);
+      };
+    }
+  }, [isOpen, updatePosition]);
+
   return (
-    <div ref={ref} className="relative">
+    <>
       <button
+        ref={buttonRef}
         type="button"
         onClick={() => setIsOpen(!isOpen)}
         className="w-10 h-10 flex items-center justify-center rounded-lg bg-white/5 hover:bg-white/10 transition-colors text-xl border border-white/10"
@@ -30,8 +56,12 @@ export function EmojiPicker({ value, onChange }: EmojiPickerProps) {
       >
         {value}
       </button>
-      {isOpen && (
-        <div className="absolute top-12 left-0 z-50 p-2 glass grid grid-cols-6 gap-1 animate-fade-in">
+      {isOpen && createPortal(
+        <div
+          ref={dropdownRef}
+          style={{ position: 'fixed', top: position.top, left: position.left }}
+          className="z-[9999] p-2 glass grid grid-cols-6 gap-1 animate-fade-in"
+        >
           {EMOJIS.map((emoji) => (
             <button
               key={emoji}
@@ -45,8 +75,9 @@ export function EmojiPicker({ value, onChange }: EmojiPickerProps) {
               {emoji}
             </button>
           ))}
-        </div>
+        </div>,
+        document.body
       )}
-    </div>
+    </>
   );
 }

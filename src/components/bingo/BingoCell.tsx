@@ -13,11 +13,10 @@ export function BingoCell({ theme, onClick, readOnly = false }: BingoCellProps) 
       onClick={onClick}
       disabled={readOnly && !theme.is_done}
       className={clsx(
-        'relative flex flex-col items-center justify-center gap-2 p-4 rounded-2xl border transition-all duration-300 overflow-hidden aspect-square max-h-full',
+        'relative flex flex-col items-center justify-center gap-2 p-4 rounded-2xl border transition-colors duration-200 overflow-hidden aspect-square max-h-full',
         theme.is_done
-          ? 'bg-emerald-900/30 border-emerald-500/30 animate-bounce-check'
-          : 'border-white/10 hover:border-white/30 hover:-translate-y-1 hover:shadow-xl cursor-pointer',
-        !theme.is_done && !readOnly && 'animate-pulse-glow'
+          ? 'bg-emerald-900/30 border-emerald-500/30'
+          : 'border-white/10 hover:border-white/30 cursor-pointer'
       )}
       style={
         !theme.is_done
