@@ -88,13 +88,27 @@ export function Lightbox({
 
   return (
     <div
-      className="fixed inset-0 z-[70] bg-black/95 flex flex-col animate-fade-in"
+      className="fixed inset-0 z-[70] bg-black flex items-center justify-center animate-fade-in"
       onClick={onClose}
     >
-      {/* Top bar */}
-      <div className="shrink-0 flex items-center justify-between px-4 py-3">
+      {/* Image area — fullscreen */}
+      <div
+        className="w-full h-full flex items-center justify-center p-2"
+        onClick={(e) => e.stopPropagation()}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+      >
+        <img
+          src={photo.url}
+          alt={photo.caption || photo.filename}
+          className="max-w-full max-h-full object-contain"
+        />
+      </div>
+
+      {/* Top bar — overlay */}
+      <div className="absolute top-0 left-0 right-0 flex items-center justify-between px-4 py-3 bg-gradient-to-b from-black/60 to-transparent opacity-0 hover:opacity-100 transition-opacity">
         <div />
-        <span className="text-white/60 text-sm font-mono tabular-nums">
+        <span className="text-white/80 text-sm font-mono tabular-nums">
           {currentIndex + 1} / {photos.length}
         </span>
         <button
@@ -110,7 +124,7 @@ export function Lightbox({
       {currentIndex > 0 && (
         <button
           onClick={(e) => { e.stopPropagation(); goPrev(); }}
-          className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white text-xl transition-colors z-10"
+          className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white text-xl transition-colors z-10 opacity-0 hover:opacity-100 transition-opacity"
           aria-label="Photo précédente"
         >
           ‹
@@ -119,48 +133,36 @@ export function Lightbox({
       {currentIndex < photos.length - 1 && (
         <button
           onClick={(e) => { e.stopPropagation(); goNext(); }}
-          className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white text-xl transition-colors z-10"
+          className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white text-xl transition-colors z-10 opacity-0 hover:opacity-100 transition-opacity"
           aria-label="Photo suivante"
         >
           ›
         </button>
       )}
 
-      {/* Image area — takes remaining space but never pushes caption out */}
+      {/* Caption — overlay at bottom */}
       <div
-        className="flex-1 min-h-0 flex items-center justify-center px-16"
-        onClick={(e) => e.stopPropagation()}
-        onTouchStart={handleTouchStart}
-        onTouchEnd={handleTouchEnd}
-      >
-        <img
-          src={photo.url}
-          alt={photo.caption || photo.filename}
-          className="max-w-full max-h-full object-contain rounded-lg"
-        />
-      </div>
-
-      {/* Caption — always visible at bottom */}
-      <div
-        className="shrink-0 w-full max-w-xl mx-auto px-4 py-4"
+        className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 hover:opacity-100 transition-opacity"
         onClick={(e) => e.stopPropagation()}
       >
-        {readOnly ? (
-          photo.caption && (
-            <p className="text-center text-white/70 text-sm">{photo.caption}</p>
-          )
-        ) : (
-          <input
-            ref={captionInputRef}
-            type="text"
-            value={caption}
-            onChange={(e) => setCaption(e.target.value)}
-            onBlur={handleCaptionBlur}
-            onKeyDown={handleCaptionKeyDown}
-            placeholder="Ajouter une légende..."
-            className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-white text-center placeholder-white/30 focus:outline-none focus:ring-1 focus:ring-indigo-500/50 text-sm"
-          />
-        )}
+        <div className="w-full max-w-xl mx-auto px-4 py-4">
+          {readOnly ? (
+            photo.caption && (
+              <p className="text-center text-white/70 text-sm">{photo.caption}</p>
+            )
+          ) : (
+            <input
+              ref={captionInputRef}
+              type="text"
+              value={caption}
+              onChange={(e) => setCaption(e.target.value)}
+              onBlur={handleCaptionBlur}
+              onKeyDown={handleCaptionKeyDown}
+              placeholder="Ajouter une légende..."
+              className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-white text-center placeholder-white/30 focus:outline-none focus:ring-1 focus:ring-indigo-500/50 text-sm"
+            />
+          )}
+        </div>
       </div>
     </div>
   );
