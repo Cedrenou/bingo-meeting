@@ -9,6 +9,7 @@ import { Dashboard } from './routes/Dashboard';
 import { MeetingEditor } from './routes/MeetingEditor';
 import { BingoBoard } from './routes/BingoBoard';
 import { LiveView } from './routes/LiveView';
+import { ResetPasswordPage } from './routes/ResetPasswordPage';
 
 export default function App() {
   const toast = useToastState();
@@ -30,6 +31,7 @@ export default function App() {
                   <Routes>
                     <Route path="/" element={<LandingPage />} />
                     <Route path="/auth" element={<AuthPage />} />
+                    <Route path="/reset-password" element={<ResetPasswordPage />} />
                     <Route
                       path="/dashboard"
                       element={
